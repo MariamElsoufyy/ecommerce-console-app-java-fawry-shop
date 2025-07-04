@@ -1,19 +1,29 @@
 package models;
 
+import java.util.Date;
+
 public class Product {
     private String name;
     private double price;
     private int quantity;
     private boolean shippable;
     private boolean expirable;
+    private Date expirationDate; // for expirable products
+    private double weight; // for shippable products
+    private char weightUnit; // for shippable products //g for grams or k for kilograms
 
     ///Product constructor
-    public Product(String name, double price, int quantity, boolean shippable, boolean expirable) {
+
+    public Product(String name, double price, int quantity, boolean shippable, boolean expirable, double weight,
+            char weightUnit, Date expirationDate) {
         this.name = name;
         this.price = price;
-        this.quantity = quantity; // Default quantity
-        this.shippable = shippable; // Default shippable status
-        this.expirable = expirable; // Default expirable status
+        this.quantity = quantity;
+        this.shippable = shippable;
+        this.expirable = expirable;
+        this.weight = weight;
+        this.weightUnit = weightUnit;
+        this.expirationDate = expirationDate;
     }
 
     // getters
@@ -41,24 +51,24 @@ public class Product {
         return expirable;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public char getWeightUnit() {
+        return weightUnit;
+    }
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+    
+
     // setters
     public void setQuantity(int quantity) {
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative ❌");
         }
-
         this.quantity = quantity;
-    }
-
-    public void reduceQuantity(int quantity) {
-
-        if (quantity < 0) {
-            throw new IllegalArgumentException("Quantity cannot be negative ❌");
-        }
-        if (this.quantity < quantity) {
-            throw new IllegalArgumentException("Not enough quantity available ❌");
-        }
-        this.quantity -= quantity;
     }
 
 }
