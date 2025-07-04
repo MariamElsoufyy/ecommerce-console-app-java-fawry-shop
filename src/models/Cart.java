@@ -78,7 +78,7 @@ public class Cart {
         for (CartItem item : items) {
             totalPrice += item.getTotalPrice();
         }
-        return totalPrice;
+        return Math.round(totalPrice * 100.0) / 100.0; // Round to 2 decimal places
     }
 
     public ArrayList<CartItem> ExpiredProducts() {
@@ -114,7 +114,7 @@ public class Cart {
                 totalWeight += weight * item.getQuantity(); // Multiply by quantity
             }
         }
-        return totalWeight;
+        return Math.round(totalWeight * 100.0) / 100.0; // Round to 2 decimal places
     }
 
     public boolean checkStockAvailability() {
@@ -139,5 +139,15 @@ public class Cart {
             product.setQuantity(newQuantity);
         }
         return true; // All items updated successfully
+    }
+
+    public void sendToShipmentService(ShipmentService shipmentService) {
+        for (CartItem item : shippableItems) {
+            for (int i = 0; i < item.getQuantity(); i++) {
+                shipmentService.addShippableItem(item.getProduct());
+            }
+        }
+        ShipmentService.printShipmentNotice();
+
     }
 }

@@ -16,7 +16,7 @@ public class Customer {
         this.password = password;
         this.phone = phone;
         this.address = address;
-        this.balance = 0.0;
+        this.balance = balance;
 
     }
 

@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import models.Cart;
 import models.CartItem;
+import models.ShipmentService;
 
 public class CustomerApp {
     static final Scanner scanner = new Scanner(System.in);
@@ -10,6 +11,7 @@ public class CustomerApp {
     static double customerBalance = 0.0;
     static double shippingCost = 65.0;
     static double totalPayment = 0.0;
+    static ShipmentService shipmentService = new ShipmentService();
 
     public static void main(String[] args) throws Exception {
         String choice = "";
@@ -254,8 +256,14 @@ public class CustomerApp {
             } else {
                 System.out.println("Product not found in your cart. Please try again.");
             }
-            System.out.println("Do you want to remove another product from your cart? (yes/no)");
-            continueRemoving = scanner.nextLine().toLowerCase();
+            if (cart.getItems().isEmpty()) {
+                System.out.println("Your cart is now empty.");
+                return;
+            } else {
+                System.out.println("Do you want to remove another product from your cart? (yes/no)");
+                continueRemoving = scanner.nextLine().toLowerCase();
+            }
+
         } while (continueRemoving.equals("yes") && !cart.getItems().isEmpty());
 
     }
@@ -292,12 +300,35 @@ public class CustomerApp {
                 System.out.println("Please add money to your balance before checking out");
                 return;
             }
+            for (models.CartItem item : cart.getItems()) {
+                models.Product product = item.getProduct();
+                // Deduct the quantity from the product stock
+                int newQuantity = product.getQuantity() - item.getQuantity();
+                if (newQuantity < 0) {
+                    System.out.println("Not enough stock for " + product.getName()
+                            + ". Please remove it from cart and then try again.");
+                    return;
+                }
+
+            }
+            for (models.CartItem item : cart.getItems()) {
+                models.Product product = item.getProduct();
+                // Deduct the quantity from the product stock
+                int newQuantity = product.getQuantity() - item.getQuantity();
+                product.setQuantity(newQuantity);
+                // Update the product quantity in the database
+                dao.ProductDAO.updateProduct(product);
+            }
+
             // Deduct the total payment from the customer's balance
             customerBalance -= totalPayment;
             dao.CustomerDAO.updateCustomerBalance(customerIdentfier, customerBalance);
             System.out.println("Checkout successful! Your new balance is: " + customerBalance);
-            cart.clearCart();
             System.out.println("Thank you for shopping at FawryShop!");
+            cart.sendToShipmentService(shipmentService);
+            cart.clearCart();
+
+            return;
 
         } else {
             System.out.println("Checkout cancelled.");
@@ -306,24 +337,24 @@ public class CustomerApp {
     }
 
     public static void printShipmentNotice() {
-        System.out.println("** Shipment Notice **");
+        System.out.println("\n** Shipment Notice **");
         for (models.CartItem item : cart.getShippableProducts()) {
             System.out.println(item.getQuantity() + "x " + item.getProduct().getName() +
                     "\t" + item.getProduct().getWeight() + item.getProduct().getWeightUnit());
         }
-        System.out.println("Total Package weight " + cart.getTotalShipmentWeight() + "kg");
+        System.out.println("Total Package weight \t" + cart.getTotalShipmentWeight() + "kg");
 
     }
 
     public static void printCheckoutReceipt() {
-        System.out.println("** Checkout receipt **");
+        System.out.println("\n** Checkout receipt **");
         for (models.CartItem item : cart.getItems()) {
             System.out.println(item.getQuantity() + "x " + item.getProduct().getName() +
                     "\t" + item.getProduct().getPrice());
         }
         System.out.println("------------------------------------");
         if (cart.hasShippableProducts()) {
-            System.out.println("SubTotal" + cart.getTotalPrice());
+            System.out.println("SubTotal \t" + cart.getTotalPrice());
             System.out.println("Shipping \t" + shippingCost);
             System.out.println("Amount \t" + totalPayment);
         }
@@ -335,9 +366,11 @@ public class CustomerApp {
         while (amountToAdd <= 0) {
             System.out.println("Invalid amount. Please enter a positive number.");
             amountToAdd = Double.parseDouble(scanner.nextLine());
+
         }
         customerBalance += amountToAdd;
         dao.CustomerDAO.updateCustomerBalance(customerIdentfier, customerBalance);
         System.out.println("Your new balance is: " + customerBalance);
     }
+
 }

@@ -174,7 +174,7 @@ Exiting the application!
 
 
 
-// ---TESTCASE 6 --- Wrong password
+---TESTCASE 6 --- Wrong password
 Welcome to FawryShop!
 Products table created successfully
 Sample products inserted successfully
@@ -197,3 +197,271 @@ Please enter your password:
 Login successful! Welcome mariam!
 
 
+---TESTCASE 7 --- Check out with shippable products
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+3
+Please enter the product name to add to your cart:
+airpods
+Please enter the quantity to add:
+12
+Do you want to add another product to your cart? (yes/no)
+no
+Updated cart:
+Your cart contains the following items:
+ - airpods | Quantity: 12 | Price: 10000.0 | Total: 120000.0
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+5
+You have shippable products in your cart, shipping cost will be added to your total price
+Shipping cost: 65.0
+
+** Shipment Notice **
+12x airpods     100.0g
+Total Package weight    1.2kg
+
+** Checkout receipt **
+12x airpods     10000.0
+------------------------------------
+SubTotal        120000.0
+Shipping        65.0
+Amount  120065.0
+Do you want to proceed with checkout? (yes/no)
+yes
+Checkout successful! Your new balance is: 49599.0
+Thank you for shopping at FawryShop!
+
+
+
+
+---TESTCASE 8 --- Check out with unsufficient balance
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+3
+Please enter the product name to add to your cart:
+airpods
+Please enter the quantity to add:
+1
+Do you want to add another product to your cart? (yes/no)
+no
+Updated cart:
+Your cart contains the following items:
+ - airpods | Quantity: 1 | Price: 10000.0 | Total: 10000.0
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+5
+You have shippable products in your cart, shipping cost will be added to your total price
+Shipping cost: 65.0
+
+** Shipment Notice **
+1x airpods      100.0g
+Total Package weight    0.1kg
+
+** Checkout receipt **
+1x airpods      10000.0
+------------------------------------
+SubTotal        10000.0
+Shipping        65.0
+Amount  10065.0
+Do you want to proceed with checkout? (yes/no)
+yes
+You don't have enough balance to complete this transaction.
+Your current balance is: 30.0
+Please add money to your balance before checking out
+
+
+
+---TESTCASE 9 --- Check out with empty cart
+Please enter the product name to add to your cart:
+airpods
+Please enter the quantity to add:
+1
+Do you want to add another product to your cart? (yes/no)
+no
+Updated cart:
+Your cart contains the following items:
+ - airpods | Quantity: 1 | Price: 10000.0 | Total: 10000.0
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+4
+Please enter the product name to remove from your cart:
+airpods
+Please enter the quantity to remove:
+1
+1 items of airpods removed from your cart.
+Your cart is now empty.
+Updated cart:
+Your cart is empty.
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+5
+Your cart is empty. Please add items to your cart before checking out
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+
+
+
+----TESTCASE 10 --- Check out with expired products
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+3
+Please enter the product name to add to your cart:
+tea
+Please enter the quantity to add:
+10
+Do you want to add another product to your cart? (yes/no)
+no
+Updated cart:
+Your cart contains the following items:
+ - tea | Quantity: 10 | Price: 200.0 | Total: 2000.0
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+5
+You have expired products in your cart, please remove them before checking out
+Expired Products in your cart:
+tea | Quantity: 10
+
+
+
+---TESTCASE 11 --- checkout without shippable products
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+3 
+Please enter the product name to add to your cart:
+choco
+Please enter the quantity to add:
+3
+Do you want to add another product to your cart? (yes/no)
+no
+Updated cart:
+Your cart contains the following items:
+ - choco | Quantity: 3 | Price: 15.0 | Total: 45.0
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+5
+
+** Checkout receipt **
+3x choco        15.0
+------------------------------------
+Do you want to proceed with checkout? (yes/no)
+yes
+Checkout successful! Your new balance is: 49554.0
+Thank you for shopping at FawryShop!
+
+
+
+---TESTCASE 12 --- Shipment service notice
+Choose an action:
+1. View all products
+2. View cart
+3. Add a product to cart
+4. Remove a product from cart
+5. Checkout
+6. View your balance
+7. add money to your balance
+8. Exit (or type 'x' to exit)
+5
+You have shippable products in your cart, shipping cost will be added to your total price
+Shipping cost: 65.0
+
+** Shipment Notice **
+3x airpods      100.0g
+5x wipes        100.0g
+Total Package weight    0.8kg
+
+** Checkout receipt **
+3x airpods      10000.0
+5x wipes        30.0
+------------------------------------
+SubTotal        30150.0
+Shipping        65.0
+Amount  30215.0
+Do you want to proceed with checkout? (yes/no)
+yes
+Checkout successful! Your new balance is: 4988819.0
+Thank you for shopping at FawryShop!
+** Shipment Service Notice **
+airpods 100.0
+airpods 100.0
+airpods 100.0
+wipes   100.0
+wipes   100.0
+wipes   100.0
+wipes   100.0
+wipes   100.0

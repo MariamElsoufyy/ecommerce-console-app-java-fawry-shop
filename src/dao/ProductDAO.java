@@ -97,11 +97,6 @@ public class ProductDAO {
             stmt.setString(8, product.getName());
 
             int rows = stmt.executeUpdate();
-            if (rows > 0) {
-                System.out.println("Product updated successfully.");
-            } else {
-                System.out.println("Product not found.");
-            }
 
         } catch (SQLException e) {
             System.out.println("Error updating product: " + e.getMessage());

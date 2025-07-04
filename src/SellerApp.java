@@ -13,7 +13,7 @@ public class SellerApp {
         System.out.println("Initializing database...");
         utils.DBHelper.initializeDatabase();
 
-        while (!choice.equals("x") && !choice.equals("7")) {
+        while (!choice.equals("x") && !choice.equals("8")) {
             System.out.println("Choose an action:");
             System.out.println("1. Add a new product");
             System.out.println("2. Update an existing product's Quantity");
@@ -21,7 +21,8 @@ public class SellerApp {
             System.out.println("4. Check expired products");
             System.out.println("5. View all products");
             System.out.println("6. Clear all products");
-            System.out.println("7. Exit (or type 'x' to exit)");
+            System.out.println("7. Show all customers");
+            System.out.println("8. Exit (or type 'x' to exit)");
 
             choice = scanner.nextLine();
             switch (choice) {
@@ -47,7 +48,22 @@ public class SellerApp {
                     System.out.println("Clearing all products...");
                     dao.ProductDAO.clearAllProducts();
                     break;
-                case "7":
+                case "7": // Show all customers
+                    System.out.println("Showing all customers...");
+                    java.util.ArrayList<models.Customer> customers = dao.CustomerDAO.getAllCustomers();
+                    if (customers.isEmpty()) {
+                        System.out.println("No customers found.");
+                    } else {
+                        System.out.println("Customers:");
+                        for (models.Customer customer : customers) {
+                            System.out.println(" - " + customer.getName() + " | Email: "
+                                    + customer.getEmail() + " | Phone: " + customer.getPhone()
+                                    + " | Address: " + customer.getAddress() + " | Balance: "
+                                    + customer.getBalance());
+                        }
+                    }
+                    break;
+                case "8":
                 case "x":
                     System.out.println("Exiting the application!");
 

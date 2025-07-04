@@ -6,7 +6,7 @@ public class ShipmentService {
     static ArrayList<Shippable> ShippedOrders;
 
     public ShipmentService() {
-        ShipmentService.ShippedOrders = new ArrayList<Shippable>();
+        ShippedOrders = new ArrayList<Shippable>();
 
     }
 
@@ -15,7 +15,7 @@ public class ShipmentService {
     }
 
     public static void printShipmentNotice() {
-        System.out.println("** Shipment Notice **");
+        System.out.println("** Shipment Service Notice **");
         for (models.Shippable product : ShippedOrders) {
             System.out.println(product.getName() + "\t" + product.getWeight());
         }
