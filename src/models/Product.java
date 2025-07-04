@@ -58,10 +58,10 @@ public class Product {
     public char getWeightUnit() {
         return weightUnit;
     }
+
     public Date getExpirationDate() {
         return expirationDate;
     }
-    
 
     // setters
     public void setQuantity(int quantity) {
@@ -71,4 +71,11 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public boolean isExpired() {
+        if (!expirable || expirationDate == null) {
+            return false; // Not expirable or no expiration date set
+        }
+        Date currentDate = new Date();
+        return expirationDate.before(currentDate); // Check if the product is expired
+    }
 }

@@ -179,20 +179,20 @@ public class ProductDAO {
             String today = formatter.format(new java.util.Date());
 
             stmt.setString(1, today);
-            ResultSet rs = stmt.executeQuery();
+            ResultSet result = stmt.executeQuery();
 
-            while (rs.next()) {
-                String name = rs.getString("name");
-                double price = rs.getDouble("price");
-                int quantity = rs.getInt("quantity");
-                boolean shippable = rs.getBoolean("shippable");
-                boolean expirable = rs.getBoolean("expirable");
+            while (result.next()) {
+                String name = result.getString("name");
+                double price = result.getDouble("price");
+                int quantity = result.getInt("quantity");
+                boolean shippable = result.getBoolean("shippable");
+                boolean expirable = result.getBoolean("expirable");
 
-                double weight = rs.getDouble("weight");
-                String weightUnitStr = rs.getString("weight_unit");
+                double weight = result.getDouble("weight");
+                String weightUnitStr = result.getString("weight_unit");
                 char weightUnit = (weightUnitStr != null && !weightUnitStr.isEmpty()) ? weightUnitStr.charAt(0) : 'g';
 
-                String expDateStr = rs.getString("expiration_date");
+                String expDateStr = result.getString("expiration_date");
                 Date expirationDate = null;
                 if (expDateStr != null) {
                     expirationDate = formatter.parse(expDateStr);
@@ -230,20 +230,20 @@ public class ProductDAO {
 
         try (Connection conn = DBHelper.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
+                ResultSet result = stmt.executeQuery()) {
 
-            while (rs.next()) {
-                String name = rs.getString("name");
-                double price = rs.getDouble("price");
-                int quantity = rs.getInt("quantity");
-                boolean shippable = rs.getBoolean("shippable");
-                boolean expirable = rs.getBoolean("expirable");
+            while (result.next()) {
+                String name = result.getString("name");
+                double price = result.getDouble("price");
+                int quantity = result.getInt("quantity");
+                boolean shippable = result.getBoolean("shippable");
+                boolean expirable = result.getBoolean("expirable");
 
-                double weight = rs.getDouble("weight");
-                String weightUnitStr = rs.getString("weight_unit");
+                double weight = result.getDouble("weight");
+                String weightUnitStr = result.getString("weight_unit");
                 char weightUnit = (weightUnitStr != null && !weightUnitStr.isEmpty()) ? weightUnitStr.charAt(0) : 'g';
 
-                String expDateStr = rs.getString("expiration_date");
+                String expDateStr = result.getString("expiration_date");
                 Date expirationDate = null;
                 if (expDateStr != null) {
                     expirationDate = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(expDateStr);

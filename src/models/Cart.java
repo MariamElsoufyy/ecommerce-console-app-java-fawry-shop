@@ -1,15 +1,18 @@
 package models;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Cart {
 
     private ArrayList<CartItem> items;
+    private ArrayList<CartItem> shippableItems;
     private double totalPrice;
 
     // Cart constructor
     public Cart() {
         this.items = new ArrayList<CartItem>();
+        this.shippableItems = new ArrayList<CartItem>();
         this.totalPrice = 0.0;
     }
 
@@ -23,8 +26,21 @@ public class Cart {
             }
         }
         // If not found, add a new CartItem
-        items.add(new CartItem(product, quantity));
+        CartItem cartItem = new CartItem(product, quantity);
+        items.add(cartItem);
+        if (product.isShippable()) {
+            shippableItems.add(cartItem);
+        }
 
+    }
+
+    public CartItem getItem(String productName) {
+        for (CartItem item : items) {
+            if (item.getProduct().getName().equals(productName)) {
+                return item; // Return the CartItem if found
+            }
+        }
+        return null; // Return null if not found
     }
 
     public void deduceItem(String productName, int quantity) {
@@ -56,4 +72,62 @@ public class Cart {
         return totalPrice;
     }
 
+    public ArrayList<CartItem> ExpiredProducts() {
+        ArrayList<CartItem> expiredItems = new ArrayList<CartItem>();
+        for (CartItem item : items) {
+            if (item.getProduct().isExpirable() && item.getProduct().isExpired()) {
+                expiredItems.add(item);
+            }
+        }
+        return expiredItems;
+
+    }
+
+    public boolean hasShippableProducts() {
+        return shippableItems != null && !shippableItems.isEmpty();
+    }
+
+    public ArrayList<CartItem> getShippableProducts() {
+        return shippableItems;
+    }
+
+    public double getTotalShipmentWeight() {
+        double totalWeight = 0.0;
+        for (CartItem item : shippableItems) {
+            Product product = item.getProduct();
+            double weight = product.getWeight();
+            char weightUnit = product.getWeightUnit();
+            if (weightUnit == 'g') {
+                weight /= 1000; // Convert grams to kg
+            } else if (weightUnit == 'k') {
+
+                totalWeight += weight * item.getQuantity(); // Multiply by quantity
+            }
+        }
+        return totalWeight;
+    }
+
+    public boolean checkStockAvailability() {
+        for (CartItem item : items) {
+            Product product = item.getProduct();
+            if (product.getQuantity() < item.getQuantity()) {
+                System.out.println("Not enough stock for " + product.getName());
+                return false; // Not enough stock for at least one item
+            }
+        }
+        return true; // All items have sufficient stock
+    }
+
+    public boolean updateStock() {
+        for (CartItem item : items) {
+            Product product = item.getProduct();
+            int newQuantity = product.getQuantity() - item.getQuantity();
+            if (newQuantity < 0) {
+                System.out.println("Not enough stock for " + product.getName());
+                return false; // Not enough stock for at least one item
+            }
+            product.setQuantity(newQuantity);
+        }
+        return true; // All items updated successfully
+    }
 }

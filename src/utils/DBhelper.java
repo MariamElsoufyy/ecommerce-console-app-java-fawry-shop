@@ -28,13 +28,27 @@ public class DBHelper {
                     + "expirable BOOLEAN NOT NULL DEFAULT 0, "
                     + "weight REAL DEFAULT NULL, "
                     + "weight_unit CHAR(1) DEFAULT NULL, "
-                    + "expiration_date TEXT DEFAULT NULL,"
-                    + " UNIQUE(name, expiration_date) "
-
+                    + "expiration_date TEXT DEFAULT NULL"
                     + ");";
 
             stmt.execute(createProductsTable);
             System.out.println("Products table created successfully");
+            // Insert sample products
+            String insertSampleProducts = """
+                        INSERT OR IGNORE INTO products
+                        (name, price, quantity, shippable, expirable, weight, weight_unit, expiration_date)
+                        VALUES
+                        ('milk', 25.5, 20, 0, 1, NULL, NULL, '2025-10-01'),
+                        ('choco', 15.0, 50, 1, 0, 200.0, 'g', NULL),
+                        ('det', 45.0, 10, 1, 0, 1.0, 'k', NULL),
+                        ('yog', 10.0, 30, 0, 1, NULL, NULL, '2025-07-10'),
+                        ('cup', 100.0, 15, 0, 0, NULL, NULL, NULL);
+
+                    """;
+
+            stmt.execute(insertSampleProducts);
+            System.out.println("Sample products inserted successfully");
+
             // Create Customers table if it doesn't exist
             String createCustomersTable = "CREATE TABLE IF NOT EXISTS customers ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -42,7 +56,8 @@ public class DBHelper {
                     + "email TEXT NOT NULL UNIQUE, "
                     + "password TEXT NOT NULL, "
                     + "phone TEXT NOT NULL UNIQUE, "
-                    + "address TEXT NOT NULL"
+                    + "address TEXT NOT NULL,"
+                    + "balance REAL NOT NULL DEFAULT 0.0"
                     + ");";
             stmt.execute(createCustomersTable);
             System.out.println("Customers table created successfully");
