@@ -21,12 +21,13 @@ public class CustomerDAO {
 
     // Get a customer by email
     public static models.Customer getCustomer(String identifier, String password) {
-        String sql = "SELECT * FROM customers WHERE (email = ? OR phone = ?)";
+        String sql = "SELECT * FROM customers WHERE (email = ? OR phone = ?) AND password = ?";
         try (java.sql.Connection conn = utils.DBHelper.getConnection();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, identifier);
             pstmt.setString(2, identifier);
-            // pstmt.setString(3, password);
+
+            pstmt.setString(3, password);
             java.sql.ResultSet result = pstmt.executeQuery();
             if (result.next()) {
                 return new models.Customer(result.getString("name"), result.getString("email"),
@@ -51,6 +52,7 @@ public class CustomerDAO {
             pstmt.setString(3, identifier); // as phone
 
             int rowsAffected = pstmt.executeUpdate();
+
             if (rowsAffected == 0) {
                 System.out.println("No customer found with the given email or phone.");
             }

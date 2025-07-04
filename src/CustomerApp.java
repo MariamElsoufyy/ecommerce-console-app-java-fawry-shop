@@ -80,6 +80,18 @@ public class CustomerApp {
                 case "5": // Checkout
                     checkOut();
                     break;
+                case "6": // View your balance
+                    System.out.println("Your current balance is: " + customerBalance);
+                    break;
+                case "7": // Add money to your balance
+                    addBalance();
+                    break;
+                case "8": // Exit
+                case "x":
+                    System.out.println("Exiting the application!");
+                    scanner.close();
+                    return;
+
             }
 
         }
@@ -158,34 +170,51 @@ public class CustomerApp {
             System.out.println("Please enter the product name to add to your cart:");
             String productName = scanner.nextLine().toLowerCase();
             models.Product productToAdd = dao.ProductDAO.getProductByName(productName);
+
             if (productToAdd != null) {
                 System.out.println("Please enter the quantity to add:");
                 int quantity = Integer.parseInt(scanner.nextLine());
+
                 while (quantity <= 0) {
                     System.out.println("Invalid quantity. Please enter a positive number.");
                     quantity = Integer.parseInt(scanner.nextLine());
                 }
-                System.out.println("Available Quantity in stock: " + productToAdd.getQuantity() + " items");
-                while (quantity > productToAdd.getQuantity() || cart.getItem(productName) != null
-                        && cart.getItem(productName).getQuantity() + quantity > productToAdd.getQuantity()) {
-                    if ((productToAdd.getQuantity() - cart.getItem(productName).getQuantity()) <= 0) {
-                        System.out.println("No stock available for this product, please try again later");
-                        return;
+                if (!cart.isItemInCart(productToAdd)) {
+                    while (quantity > productToAdd.getQuantity()) {
+                        System.out.println("Not Enough Quantity in stock, Quantity in stock: "
+                                + productToAdd.getQuantity() + " items");
+                        System.out.println("Please enter a valid quantity to add:");
+                        quantity = Integer.parseInt(scanner.nextLine());
+                        while (quantity <= 0) {
+                            System.out.println("Invalid quantity. Please enter a positive number.");
+                            quantity = Integer.parseInt(scanner.nextLine());
+                        }
                     }
-                    System.out.println("Not Enough Quantity in stock, available Quantity :"
-                            + (productToAdd.getQuantity() - cart.getItem(productName).getQuantity())
-                            + "items");
-                    System.out.println("Please enter a valid quantity to add:");
-                    quantity = Integer.parseInt(scanner.nextLine());
+                } else {
 
+                    if (productToAdd.getQuantity() == cart.getItem(productName).getQuantity()) {
+
+                        System.out.println("You already have this product in your cart with the maximum quantity.");
+                        return;
+                    } else {
+                        while (quantity > productToAdd.getQuantity() + cart.getItem(productName).getQuantity()) {
+                            System.out.println("Not Enough Quantity in stock, Quantity in stock: "
+                                    + productToAdd.getQuantity() + " items");
+                            System.out.println("Please enter a valid quantity to add:");
+                            quantity = Integer.parseInt(scanner.nextLine());
+                            while (quantity <= 0) {
+                                System.out.println("Invalid quantity. Please enter a positive number.");
+                                quantity = Integer.parseInt(scanner.nextLine());
+                            }
+                        }
+
+                    }
                 }
                 cart.addItem(productToAdd, quantity);
-                System.out.println(
-                        quantity + " items of " + productToAdd.getName() + " added to your cart.");
-
             } else {
                 System.out.println("Product not available. Please try again.");
             }
+
             System.out.println("Do you want to add another product to your cart? (yes/no)");
             continueAdding = scanner.nextLine().toLowerCase();
         } while (continueAdding.equals("yes"));
@@ -280,7 +309,7 @@ public class CustomerApp {
         System.out.println("** Shipment Notice **");
         for (models.CartItem item : cart.getShippableProducts()) {
             System.out.println(item.getQuantity() + "x " + item.getProduct().getName() +
-                    "\t" + item.getProduct().getWeight());
+                    "\t" + item.getProduct().getWeight() + item.getProduct().getWeightUnit());
         }
         System.out.println("Total Package weight " + cart.getTotalShipmentWeight() + "kg");
 
@@ -298,5 +327,17 @@ public class CustomerApp {
             System.out.println("Shipping \t" + shippingCost);
             System.out.println("Amount \t" + totalPayment);
         }
+    }
+
+    public static void addBalance() {
+        System.out.println("Please enter the amount to add to your balance:");
+        double amountToAdd = Double.parseDouble(scanner.nextLine());
+        while (amountToAdd <= 0) {
+            System.out.println("Invalid amount. Please enter a positive number.");
+            amountToAdd = Double.parseDouble(scanner.nextLine());
+        }
+        customerBalance += amountToAdd;
+        dao.CustomerDAO.updateCustomerBalance(customerIdentfier, customerBalance);
+        System.out.println("Your new balance is: " + customerBalance);
     }
 }

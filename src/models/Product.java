@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class Product {
+public class Product implements Shippable {
     private String name;
     private double price;
     private int quantity;
@@ -27,6 +27,7 @@ public class Product {
     }
 
     // getters
+    @Override
     public String getName() {
         return name;
     }
@@ -51,6 +52,7 @@ public class Product {
         return expirable;
     }
 
+    @Override
     public double getWeight() {
         return weight;
     }

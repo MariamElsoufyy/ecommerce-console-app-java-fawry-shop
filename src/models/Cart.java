@@ -34,6 +34,15 @@ public class Cart {
 
     }
 
+    public boolean isItemInCart(Product product) {
+        for (CartItem item : items) {
+            if (item.getProduct().getName().equals(product.getName())) {
+                return true; // Product is already in the cart
+            }
+        }
+        return false; // Product is not in the cart
+    }
+
     public CartItem getItem(String productName) {
         for (CartItem item : items) {
             if (item.getProduct().getName().equals(productName)) {
@@ -98,7 +107,8 @@ public class Cart {
             double weight = product.getWeight();
             char weightUnit = product.getWeightUnit();
             if (weightUnit == 'g') {
-                weight /= 1000; // Convert grams to kg
+                totalWeight += (weight / 1000) * item.getQuantity(); // Convert grams to kg
+
             } else if (weightUnit == 'k') {
 
                 totalWeight += weight * item.getQuantity(); // Multiply by quantity

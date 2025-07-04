@@ -39,7 +39,7 @@ public class DBHelper {
                         (name, price, quantity, shippable, expirable, weight, weight_unit, expiration_date)
                         VALUES
                         ('milk', 25.5, 20, 0, 1, NULL, NULL, '2025-10-01'),
-                        ('choco', 15.0, 50, 1, 0, 200.0, 'g', NULL),
+                        ('choco', 15.0, 50, 0, 0, 200.0, 'g', NULL),
                         ('det', 45.0, 10, 1, 0, 1.0, 'k', NULL),
                         ('yog', 10.0, 30, 0, 1, NULL, NULL, '2025-07-10'),
                         ('cup', 100.0, 15, 0, 0, NULL, NULL, NULL);
@@ -57,7 +57,7 @@ public class DBHelper {
                     + "password TEXT NOT NULL, "
                     + "phone TEXT NOT NULL UNIQUE, "
                     + "address TEXT NOT NULL,"
-                    + "balance REAL NOT NULL DEFAULT 0.0"
+                    + "balance REAL NOT NULL"
                     + ");";
             stmt.execute(createCustomersTable);
             System.out.println("Customers table created successfully");

@@ -1,0 +1,66 @@
+-----TESTCASE 1 --- check adding a duplicate product to cart
+Welcome to the Seller Application!
+Initializing database...
+Products table created successfully
+Sample products inserted successfully
+Customers table created successfully
+Database initialized successfully
+Choose an action:
+1. Add a new product
+2. Update an existing product's Quantity
+3. Delete a product
+4. Check expired products
+5. View all products
+6. Clear all products
+7. Exit (or type 'x' to exit)
+1
+Adding a new product...
+Please enter the product name:
+airpods
+Please enter the product price:
+10000
+Please enter the product quantity:
+30
+Is the product shippable? (yes/no):
+yes
+Please enter the product weight:
+100
+Please enter the weight unit (g for grams, k for kilograms):
+g
+Is the product expirable? (yes/no):
+no
+Product added successfully.
+Choose an action:
+1. Add a new product
+2. Update an existing product's Quantity
+3. Delete a product
+4. Check expired products
+5. View all products
+6. Clear all products
+7. Exit (or type 'x' to exit)
+1
+Adding a new product...
+Please enter the product name:
+airpods
+Product with the same name exists, Updating inventory instead
+Please enter the quantity:
+40
+Product updated successfully.
+Choose an action:
+1. Add a new product
+2. Update an existing product's Quantity
+3. Delete a product
+4. Check expired products
+5. View all products
+6. Clear all products
+7. Exit (or type 'x' to exit)
+5
+Viewing all products...
+All Products:
+ - milk | Price: 25.5 | Quantity: 20 | Shippable: false | Expirable: true | Weight: 0.0 g | Expiration Date: 2025-10-01
+ - choco | Price: 15.0 | Quantity: 50 | Shippable: false | Expirable: false | Weight: 200.0 g | Expiration Date: N/A
+ - det | Price: 45.0 | Quantity: 10 | Shippable: true | Expirable: false | Weight: 1.0 k | Expiration Date: N/A
+ - yog | Price: 10.0 | Quantity: 30 | Shippable: false | Expirable: true | Weight: 0.0 g | Expiration Date: 2025-07-10
+ - cup | Price: 100.0 | Quantity: 15 | Shippable: false | Expirable: false | Weight: 0.0 g | Expiration Date: N/A
+ - wipes | Price: 30.0 | Quantity: 70 | Shippable: true | Expirable: false | Weight: 100.0 g | Expiration Date: N/A
+ - airpods | Price: 10000.0 | Quantity: 70 | Shippable: true | Expirable: false | Weight: 100.0 g | Expiration Date: N/A

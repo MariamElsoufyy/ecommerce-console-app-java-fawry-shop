@@ -68,7 +68,7 @@ public class ProductDAO {
             return;
         }
 
-        String sql = "UPDATE products SET price = ?, quantity = ?, shippable = ?, expirable = ?, weight = ?, weightUnit = ?, expiration_date = ? WHERE name = ?";
+        String sql = "UPDATE products SET price = ?, quantity = ?, shippable = ?, expirable = ?, weight = ?, weight_unit = ?, expiration_date = ? WHERE name = ?";
         try (Connection conn = DBHelper.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 

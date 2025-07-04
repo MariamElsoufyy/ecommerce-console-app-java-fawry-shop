@@ -66,6 +66,19 @@ public class SellerApp {
         System.out.println("Adding a new product...");
         System.out.println("Please enter the product name:");
         String productName = scanner.nextLine().toLowerCase();
+        models.Product existingProduct = dao.ProductDAO.getProductByName(productName);
+
+        if (existingProduct != null) {
+            System.out.println(
+                    "Product with the same name exists, Updating inventory instead");
+            System.out.println("Please enter the quantity:");
+            int productQuantity = Integer.parseInt(scanner.nextLine());
+            // Update the existing product's quantity
+            existingProduct.setQuantity(existingProduct.getQuantity() + productQuantity);
+            dao.ProductDAO.updateProduct(existingProduct);
+            return;
+        }
+
         System.out.println("Please enter the product price:");
         double productPrice = Double.parseDouble(scanner.nextLine());
         System.out.println("Please enter the product quantity:");
@@ -102,16 +115,6 @@ public class SellerApp {
                     expirationDate = null; // Reset expirationDate to null to retry
                     continue; // Skip to the next iteration
                 }
-            }
-            models.Product existingProduct = dao.ProductDAO.getProductByName(productName);
-
-            if (existingProduct != null && existingProduct.getExpirationDate() != null
-                    && existingProduct.getExpirationDate().equals(expirationDate)) {
-                System.out.println(
-                        "❕ Product with the same name and expiration date already exists, Updating inventory instead");
-                // Update the existing product's quantity
-                existingProduct.setQuantity(existingProduct.getQuantity() + productQuantity);
-                dao.ProductDAO.updateProduct(existingProduct);
             }
 
             // Create a new product with expiration date
