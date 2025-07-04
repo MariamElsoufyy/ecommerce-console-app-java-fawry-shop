@@ -34,7 +34,7 @@ public class Product {
     }
 
     public boolean isShippable() {
-        return shippbale;
+        return shippable;
     }
 
     public boolean isExpirable() {
